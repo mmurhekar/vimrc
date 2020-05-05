@@ -1,0 +1,76 @@
+" Plugins to enhance GVIM Editor
+"===============================
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'kien/ctrlp.vim'
+Plug 'marcopaganini/termschool-vim-theme'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'dracula/vim'
+call plug#end()
+
+"-----------------------------------------------------------------
+set tabstop=2           " number of visual spaces per TAB
+set shiftwidth=2
+set softtabstop=2
+set autoindent
+set smartindent
+set cindent
+set number              " show line numbers
+set showcmd             " show command in bottom bar
+set wildmenu            " visual autocomplete for command menu
+set showmatch           " highlight matching [{()}]
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
+"set list lcs=tab:\>\    " show tab characters
+set list listchars=tab:»·,trail:·,nbsp:·
+set encoding=utf8
+set nocompatible
+set hidden
+"-----------------------------------------------------------------
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" Key mappings for buffer switch and Silver Search
+nnoremap <silent> <F5> :buffers<CR>:buffer<Space>
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <F3> :cnext<CR>
+nnoremap <F2> :cprev<CR>
+nnoremap <F1> :cclose<CR>
+nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+
+let g:airline_powerline_fonts=1
+"let g:airline_theme='ayu_mirage'
+let g:airline_theme='base16_pop'
+let g:better_whitespace_enabled=1
+
+"GVIM GUI Settings
+"=================
+if has('gui_running')
+	filetype plugin on
+	"set background=light
+	"colorscheme louver
+	"colorscheme termschool
+	"colorscheme palenight
+	colorscheme dracula
+	"set guifont=DroidSansMono\ Nerd\ Font\ Mono\ 10
+	set guifont=Roboto\ Mono\ for\ Powerline\ 11
+	set mouse=a
+	syntax enable
+	set wrap
+endif
